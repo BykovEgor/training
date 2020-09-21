@@ -2,10 +2,19 @@
 
 # Runs benchmark and reports time to convergence
 
+if [[ -z "$1" ]];
+then
+       # Short Benchmark
+       max_iter=8000
+else
+       # Test Benchmark
+       max_iter=$1
+fi
+
 pushd pytorch
 
 # Single GPU training
 time python tools/train_mlperf.py --config-file "configs/e2e_mask_rcnn_R_50_FPN_1x.yaml" \
-       SOLVER.IMS_PER_BATCH 2 TEST.IMS_PER_BATCH 1 SOLVER.MAX_ITER 720000 SOLVER.STEPS "(480000, 640000)" SOLVER.BASE_LR 0.0025
+       SOLVER.IMS_PER_BATCH 2 TEST.IMS_PER_BATCH 1 SOLVER.MAX_ITER $max_iter SOLVER.STEPS "(480000, 640000)" SOLVER.BASE_LR 0.0025
        
 popd
