@@ -5,7 +5,7 @@
 if [[ -z "$1" ]];
 then
        # Short Benchmark
-       max_iter=8000
+       max_iter=3000
 else
        # Test Benchmark
        max_iter=$1
