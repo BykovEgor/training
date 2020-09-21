@@ -27,6 +27,15 @@ RUN git clone https://github.com/cocodataset/cocoapi.git \
     && git reset --hard ed842bffd41f6ff38707c4f0968d2cfd91088688 \
     && python setup.py build_ext install
 
+COPY . /workspace
+
+WORKDIR /workspace
+
+RUN ./install.sh \
+    && pip install ./pytorch
+
+ENTRYPOINT ["./run_and_time.sh"]
+
 # For information purposes only, these are the versions of the packages which we've successfully used:
 # $ pip list
 # Package              Version           Location
