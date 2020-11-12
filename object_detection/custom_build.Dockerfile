@@ -17,14 +17,6 @@ RUN apt-get update -y \
     gcc \
     g++
 
-RUN pip install ninja==1.8.2.post2 \
-    yacs==0.1.5 \
-    cython==0.29.5 \
-    matplotlib==3.0.2 \
-    opencv-python==4.0.0.21 \
-    mlperf_compliance==0.0.10 \
-    torchvision==0.2.2
-
 # Install Miniconda
 RUN curl -so /miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh \
     && chmod +x /miniconda.sh \
@@ -44,10 +36,16 @@ ENV PATH=$CONDA_PREFIX/bin:$PATH
 ENV CONDA_AUTO_UPDATE_CONDA=false
 
 RUN conda install -y ipython
-RUN pip install ninja yacs cython matplotlib opencv-python
 
-# Install PyTorch with correct CUDA toolkit
-RUN conda install -y pytorch==${TORCH} torchvision==0.2.2 cudatoolkit=${CUDA} -c pytorch \
+RUN pip install ninja==1.8.2.post2 \
+    yacs==0.1.5 \
+    cython==0.29.5 \
+    matplotlib==3.0.2 \
+    opencv-python==4.0.0.21 \
+    mlperf_compliance==0.0.10 \
+
+    # Install PyTorch with correct CUDA toolkit
+    RUN conda install -y pytorch==${TORCH} torchvision==0.2.2 cudatoolkit=${CUDA} -c pytorch \
     && conda clean -ya
 
 # install pycocotools
